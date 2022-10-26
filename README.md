@@ -43,11 +43,34 @@ npm test
 아래의 7가지 기능 요구 사항을 모두 해결해야 한다.
 
 1. [문제 1](docs/PROBLEM1.md)
+
+   - 요구되어지는 기능
+
+     - pobi, crong으로 받는 페이지 정보가 적합한 정보인지 판단
+
+       우선적으로 숫자가 작은 것을 왼쪽 페이지, 큰것을 오른쪽 페이지로 설정합니다.
+
+       1. 오른쪽 페이지는 왼쪽 페이지보다 1 커야하며
+       2. 왼쪽 페이지는 항상 홀수 여야하고
+       3. 페이지는 항상 400보다 작거나 같아야하고
+       4. 페이지는 항상 1보다 커야합니다.
+
+     - 페이지를 가지고 최대 값 계산하기
+
+       숫자를 문자로 변환하고 다시 `split`메소드를 통해 배열로 변환 합니다.
+
+       그리고 `reduce` 메소드를 이용해서 모두 더한 값 혹은 모두 곲한 값을 계산하여 큰 값을 반환합니다.
+
 2. [문제 2](docs/PROBLEM2.md)
+
 3. [문제 3](docs/PROBLEM3.md)
+
 4. [문제 4](docs/PROBLEM4.md)
+
 5. [문제 5](docs/PROBLEM5.md)
+
 6. [문제 6](docs/PROBLEM6.md)
+
 7. [문제 7](docs/PROBLEM7.md)
 
 ---
@@ -66,3 +89,4 @@ npm test
 
 - 미션은 [javascript-onboarding](https://github.com/woowacourse-precourse/javascript-onboarding) 저장소를 Fork & Clone해 시작한다.
 - 과제 진행 및 제출 방법은 [프리코스 과제 제출](https://github.com/woowacourse/woowacourse-docs/tree/master/precourse) 문서를 참고한다.
+

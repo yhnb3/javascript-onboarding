@@ -9,7 +9,10 @@ function problem1(pobi, crong) {
   return 0;
 }
 
-function possiblePage([page1, page2]) {
+function possiblePage(pages) {
+  const page1 = Math.min(pages[0], pages[1]);
+  const page2 = Math.max(pages[0], pages[1]);
+
   if (page2 - page1 !== 1) return false;
   if (!(page1 & 1)) return false;
   if (Math.max(page1, page2) > 400) return false;
