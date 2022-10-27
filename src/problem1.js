@@ -22,10 +22,11 @@ function possiblePage(pages) {
 
 function makeScore(number) {
   const numToArr = String(number).split("");
-  return Math.max(
-    numToArr.reduce((acc, cur) => acc + Number(cur), 0),
-    numToArr.reduce((acc, cur) => acc * Number(cur), 1)
-  );
+
+  const plusResult = numToArr.reduce((acc, cur) => acc + Number(cur), 0);
+  const multiplyResult = numToArr.reduce((acc, cur) => acc * Number(cur), 1);
+
+  return Math.max(plusResult, multiplyResult);
 }
 
 module.exports = problem1;
