@@ -1,10 +1,10 @@
 function problem6(forms) {
   const emailSet = new Set();
-  forms.forEach(([email, _], idx) => {
+  forms.forEach(([email, nickname], idx) => {
     if (!validateEmail(email)) return;
     if (emailSet.has(email)) return;
 
-    const nicknames = compareNicknames(idx, forms);
+    const nicknames = compareNicknames(nickname, forms);
     nicknames.forEach((email) => {
       emailSet.add(email);
     });
@@ -13,16 +13,19 @@ function problem6(forms) {
   return [...emailSet].sort();
 }
 
-function compareNicknames(curIdx, forms) {
-  const targetNickname = forms[curIdx][1];
+function compareNicknames(targetNickname, forms) {
   const regString = makeRegString(targetNickname);
   const regExp = makeReg(regString);
-  const matchedIdx = forms.findIndex((form, idx) => {
-    if (idx === curIdx) return false;
+  return filterForms(regExp, forms).map(([email, _]) => email);
+}
+
+function filterForms(regExp, forms) {
+  const filteredForms = forms.filter((form) => {
     const [_, comparedNickname] = form;
     return !!comparedNickname.match(regExp)[0];
   });
-  return matchedIdx !== -1 ? [forms[curIdx][0], forms[matchedIdx][0]] : [];
+  if (filteredForms.length === 1) return [];
+  return filteredForms;
 }
 
 function validateEmail(email) {
