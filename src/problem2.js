@@ -14,9 +14,15 @@ function problem2(cryptogram) {
 
 function deleteDuplication(string, alphaSet) {
   alphaSet.forEach((alpha) => {
-    string = string.replace(alpha + alpha, "");
+    const regExp = makeReg(alpha);
+    string = string.replace(regExp, "");
   });
   return string;
+}
+
+function makeReg(alpha) {
+  const flag = "g";
+  return new RegExp(`[${alpha}+]{2,}`, flag);
 }
 
 module.exports = problem2;
