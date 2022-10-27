@@ -100,6 +100,13 @@ npm test
 
 5. [문제 5](docs/PROBLEM5.md)
 
+   - 요구 기능
+
+     - map을 이용해서 돈 단위를 돌면서 필요한 수 반환
+     - map의 콜백 함수는 필요한 수를 반환하며 그 돈을 제한 나머지 돈 계산
+
+     
+
 6. [문제 6](docs/PROBLEM6.md)
 
 7. [문제 7](docs/PROBLEM7.md)
