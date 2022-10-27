@@ -114,6 +114,12 @@ npm test
 
 6. [문제 6](docs/PROBLEM6.md)
 
+   - 요구 기능
+     - email validation 기능 함수 구현
+     - 닉네임 비교 함수 구현
+       - 정규 표현식을 위한 regString 만드는 함수 구현
+       - 정규 표현식을 통해 겹치는지 안 겹치는지 확인.
+
 7. [문제 7](docs/PROBLEM7.md)
 
 ---
