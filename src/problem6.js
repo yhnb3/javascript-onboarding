@@ -4,13 +4,16 @@ function problem6(forms) {
     if (!validateEmail(email)) return;
     if (emailSet.has(email)) return;
 
-    const nicknames = compareNicknames(nickname, forms);
-    nicknames.forEach((email) => {
-      emailSet.add(email);
-    });
+    const emails = compareNicknames(nickname, forms);
+    addEamil(emails, emailSet);
   });
-
   return [...emailSet].sort();
+}
+
+function addEamil(emails, emailSet) {
+  emails.forEach((email) => {
+    emailSet.add(email);
+  });
 }
 
 function compareNicknames(targetNickname, forms) {
@@ -20,16 +23,19 @@ function compareNicknames(targetNickname, forms) {
 }
 
 function filterForms(regExp, forms) {
-  const filteredForms = forms.filter((form) => {
-    const [_, comparedNickname] = form;
-    const matchedGroup = comparedNickname.match(regExp);
-    const filterUnmatchedGroup = matchedGroup.filter(
-      (matchString) => !!matchString
-    );
-    return filterUnmatchedGroup.length > 0;
-  });
+  const filteredForms = forms.filter(([_, nickname]) =>
+    isMatched(nickname, regExp)
+  );
   if (filteredForms.length === 1) return [];
   return filteredForms;
+}
+
+function isMatched(nickname, regExp) {
+  const matchedGroup = nickname.match(regExp);
+  const filterUnmatchedGroup = matchedGroup.filter(
+    (matchString) => !!matchString
+  );
+  return filterUnmatchedGroup.length > 0;
 }
 
 function validateEmail(email) {
