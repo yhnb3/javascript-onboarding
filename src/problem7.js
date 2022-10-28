@@ -4,9 +4,7 @@ function problem7(user, friends, visitors) {
   addVisitScore(friendsScore, visitors);
   addNearFriendScore(friendsGraph, friendsScore);
   const validFriends = filterValidFriend(friendsScore, friendsGraph);
-  const sortedFriends = validFriends.sort((a, b) =>
-    sortFriend(a, b, friendsScore)
-  );
+  const sortedFriends = sortFriends(validFriends, friendsScore);
   const top5Friends = sortedFriends.slice(0, 5);
   return top5Friends;
 }
@@ -69,9 +67,12 @@ function filterValidFriend(friendScore, friendsGraph) {
   );
 }
 
-function sortFriend(a, b, friendScore) {
-  if (friendScore[a] === friendScore[b]) return b - a;
-  return friendScore[b] - friendScore[a];
+function sortFriends(friends, friendsScore) {
+  return friends.sort((a, b) => {
+    const [scoreA, scoreB] = [friendsScore[a], friendsScore[b]];
+    if (scoreA === scoreB) return b - a;
+    return scoreB - scoreA;
+  });
 }
 
 module.exports = problem7;
