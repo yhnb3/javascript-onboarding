@@ -3,12 +3,12 @@ function problem7(user, friends, visitors) {
   const friendsScore = makeFriendScore(user, friendsGraph);
   addVisitScore(friendsScore, visitors);
   addNearFriendScore(friendsGraph, friendsScore);
-  const validFriends = filterValidFriend(friendsScore);
+  const validFriends = filterValidFriend(friendsScore, friendsGraph);
   const sortedFriends = validFriends.sort((a, b) =>
     sortFriend(a, b, friendsScore)
   );
-  console.log(sortedFriends);
-  return ["andole", "jun", "bedi"];
+  const top5Friends = sortedFriends.slice(0, 5);
+  return top5Friends;
 }
 
 function makeFriendGraph(friends, user) {
@@ -60,9 +60,13 @@ function isNearFriend(name, friendsGraph) {
   return targetUserFriendsArr.some((name) => userFriendsSet.has(name));
 }
 
-function filterValidFriend(friendScore) {
+function filterValidFriend(friendScore, friendsGraph) {
+  const user = friendsGraph["USER"];
+  const alreadyFriendSet = friendsGraph[user];
   const friendsArr = Object.keys(friendScore);
-  return friendsArr.filter((name) => friendScore[name] > 0);
+  return friendsArr.filter(
+    (name) => friendScore[name] > 0 && !alreadyFriendSet.has(name)
+  );
 }
 
 function sortFriend(a, b, friendScore) {
