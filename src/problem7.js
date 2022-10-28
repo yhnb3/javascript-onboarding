@@ -3,6 +3,7 @@ function problem7(user, friends, visitors) {
   const friendsScore = makeFriendScore(user, friendsGraph);
   addVisitScore(friendsScore, visitors);
   addNearFriendScore(friendsGraph, friendsScore);
+  const validFriend = filterValidFriend(friendsScore);
 
   return ["andole", "jun", "bedi"];
 }
@@ -50,6 +51,11 @@ function isNearFriend(name, friendsGraph) {
   const userFriendsSet = friendsGraph[user];
   const targetUserFriendsArr = [...friendsGraph[name]];
   return targetUserFriendsArr.some((name) => userFriendsSet.has(name));
+}
+
+function filterValidFriend(friendScore) {
+  const friendsArr = Object.keys(friendScore);
+  return friendsArr.filter((name) => friendScore[name] > 0);
 }
 
 module.exports = problem7;
