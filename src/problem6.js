@@ -23,19 +23,9 @@ function compareNicknames(targetNickname, forms) {
 }
 
 function filterForms(regExp, forms) {
-  const filteredForms = forms.filter(([_, nickname]) =>
-    isMatched(nickname, regExp)
-  );
+  const filteredForms = forms.filter(([_, nickname]) => nickname.match(regExp));
   if (filteredForms.length === 1) return [];
   return filteredForms;
-}
-
-function isMatched(nickname, regExp) {
-  const matchedGroup = nickname.match(regExp);
-  const filterUnmatchedGroup = matchedGroup.filter(
-    (matchString) => !!matchString
-  );
-  return filterUnmatchedGroup.length > 0;
 }
 
 function validateEmail(email) {
@@ -45,10 +35,10 @@ function validateEmail(email) {
 function makeRegString(word) {
   const wordArr = word.split("");
   const regStringArr = wordArr.map((alpha, idx) => {
-    if (idx === wordArr.length - 1) return "";
-    return `(?:${alpha}${wordArr[idx + 1]})?`;
+    if (idx === wordArr.length - 1) return `${wordArr[idx - 1]}${alpha}`;
+    return `${alpha}${wordArr[idx + 1]}`;
   });
-  return regStringArr.join("");
+  return regStringArr.join("|");
 }
 
 function makeReg(regString) {
