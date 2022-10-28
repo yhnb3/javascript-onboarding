@@ -29,7 +29,7 @@ function filterForms(regExp, forms) {
 }
 
 function validateEmail(email) {
-  return email.match(/@email.com/);
+  return email.match(/@email.com/g);
 }
 
 function makeRegString(word) {
