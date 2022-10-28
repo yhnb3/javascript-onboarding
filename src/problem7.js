@@ -1,14 +1,14 @@
 function problem7(user, friends, visitors) {
-  const friendsGraph = makeFriendGraph(friends);
+  const friendsGraph = makeFriendGraph(friends, user);
   const friendsScore = makeFriendScore(user, friendsGraph);
   addVisitScore(friendsScore, visitors);
-  addNearFriendScore(friendsScore, friendsGraph, user);
+  addNearFriendScore(friendsGraph, friendsScore);
 
   return ["andole", "jun", "bedi"];
 }
 
-function makeFriendGraph(friends) {
-  const friendsGraph = {};
+function makeFriendGraph(friends, user) {
+  const friendsGraph = { USER: user };
   friends.forEach(([a, b]) => {
     if (!friendsGraph[a]) friendsGraph[a] = new Set();
     if (!friendsGraph[b]) friendsGraph[b] = new Set();
@@ -33,6 +33,23 @@ function addVisitScore(friendScore, visit) {
     if (!friendScore[name]) friendScore[name] = 0;
     friendScore[name] += 1;
   });
+}
+
+function addNearFriendScore(friendsGraph, friendScore) {
+  const user = friendsGraph["USER"];
+  const userFriendsArr = [...friendsGraph[user]];
+  userFriendsArr.ForEach((name) => {
+    if (isNearFriend(name, friendsGraph)) {
+      friendScore[name] += 10;
+    }
+  });
+}
+
+function isNearFriend(name, friendsGraph) {
+  const user = friendsGraph["USER"];
+  const userFriendsSet = friendsGraph[user];
+  const targetUserFriendsArr = [...friendsGraph[name]];
+  return targetUserFriendsArr.some((name) => userFriendsSet.has(name));
 }
 
 module.exports = problem7;
