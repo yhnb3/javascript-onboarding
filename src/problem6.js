@@ -1,6 +1,6 @@
 function problem6(forms) {
   const emailSet = new Set();
-  forms.forEach(([email, nickname], idx) => {
+  forms.forEach(([email, nickname]) => {
     if (!validateEmail(email)) return;
     if (emailSet.has(email)) return;
 
@@ -22,7 +22,11 @@ function compareNicknames(targetNickname, forms) {
 function filterForms(regExp, forms) {
   const filteredForms = forms.filter((form) => {
     const [_, comparedNickname] = form;
-    return !!comparedNickname.match(regExp)[0];
+    const matchedGroup = comparedNickname.match(regExp);
+    const filterUnmatchedGroup = matchedGroup.filter(
+      (matchString) => !!matchString
+    );
+    return filterUnmatchedGroup.length > 0;
   });
   if (filteredForms.length === 1) return [];
   return filteredForms;
@@ -36,7 +40,7 @@ function makeRegString(word) {
   const wordArr = word.split("");
   const regStringArr = wordArr.map((alpha, idx) => {
     if (idx === wordArr.length - 1) return "";
-    return `(${alpha}${wordArr[idx + 1]})?`;
+    return `(?:${alpha}${wordArr[idx + 1]})?`;
   });
   return regStringArr.join("");
 }
