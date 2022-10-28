@@ -41,8 +41,11 @@ function addVisitScore(friendScore, visitors) {
 }
 
 function addNearFriendScore(friendsGraph, friendScore) {
+  const user = friendsGraph["USER"];
+  const alreadyFriendsSet = friendsGraph[user];
   const friendsArr = Object.keys(friendScore);
   friendsArr.forEach((name) => {
+    if (alreadyFriendsSet.has(name)) return;
     if (isNearFriend(name, friendsGraph)) {
       friendScore[name] += 10;
     }
