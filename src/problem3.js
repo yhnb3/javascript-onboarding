@@ -6,8 +6,9 @@ function problem3(number) {
 }
 
 function countClap(number) {
-  const [matchString] = String(number).match(/[369]+/g) || [""];
-  return matchString.length;
+  const matchString = String(number).match(/[369]+/g) || [""];
+  const matchedNumber = matchString.reduce((acc, cur) => acc + cur.length, 0);
+  return matchedNumber;
 }
 
 module.exports = problem3;
