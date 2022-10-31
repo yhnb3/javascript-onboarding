@@ -3,6 +3,7 @@ function problem7(user, friends, visitors) {
   const friendsScore = makeFriendScore(user, friendsGraph);
   addVisitScore(friendsScore, visitors);
   addNearFriendScore(friendsGraph, friendsScore);
+  console.log(friendsScore);
   const validFriends = filterValidFriend(friendsScore, friendsGraph);
   const sortedFriends = sortFriends(validFriends, friendsScore);
   const top5Friends = sortedFriends.slice(0, 5);
@@ -21,7 +22,7 @@ function makeFriendGraph(friends, user) {
 }
 
 function makeFriendScore(user, friendsGraph) {
-  const userFriendsSet = friendsGraph[user];
+  const userFriendsSet = friendsGraph[user] || new Set();
   const userArr = Object.keys(friendsGraph);
   const friendScore = {};
   userArr.forEach((name) => {
@@ -42,7 +43,7 @@ function addVisitScore(friendScore, visitors) {
 
 function addNearFriendScore(friendsGraph, friendScore) {
   const user = friendsGraph["USER"];
-  const alreadyFriendsSet = friendsGraph[user];
+  const alreadyFriendsSet = friendsGraph[user] || new Set();
   const friendsArr = Object.keys(friendScore);
   friendsArr.forEach((name) => {
     if (alreadyFriendsSet.has(name)) return;
@@ -55,14 +56,14 @@ function isNearFriend(name, friendsGraph) {
   if (!friendsGraph[name]) return false;
 
   const user = friendsGraph["USER"];
-  const userFriendsSet = friendsGraph[user];
+  const userFriendsSet = friendsGraph[user] || new Set();
   const targetUserFriendsArr = [...friendsGraph[name]];
   return targetUserFriendsArr.some((name) => userFriendsSet.has(name));
 }
 
 function filterValidFriend(friendScore, friendsGraph) {
   const user = friendsGraph["USER"];
-  const alreadyFriendSet = friendsGraph[user];
+  const alreadyFriendSet = friendsGraph[user] || new Set();
   const friendsArr = Object.keys(friendScore);
   return friendsArr.filter(
     (name) => friendScore[name] > 0 && !alreadyFriendSet.has(name)
@@ -72,7 +73,7 @@ function filterValidFriend(friendScore, friendsGraph) {
 function sortFriends(friends, friendsScore) {
   return friends.sort((a, b) => {
     const [scoreA, scoreB] = [friendsScore[a], friendsScore[b]];
-    if (scoreA === scoreB) return b - a;
+    if (scoreA === scoreB) return a > b ? 1 : -1;
     return scoreB - scoreA;
   });
 }
