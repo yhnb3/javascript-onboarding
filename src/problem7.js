@@ -3,7 +3,6 @@ function problem7(user, friends, visitors) {
   const friendsScore = makeFriendScore(user, friendsGraph);
   addVisitScore(friendsScore, visitors);
   addNearFriendScore(friendsGraph, friendsScore);
-  console.log(friendsScore);
   const validFriends = filterValidFriend(friendsScore, friendsGraph);
   const sortedFriends = sortFriends(validFriends, friendsScore);
   const top5Friends = sortedFriends.slice(0, 5);
