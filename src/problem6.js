@@ -1,11 +1,16 @@
 function problem6(forms) {
   const emailSet = new Set();
-  forms.forEach(([email, nickname]) => {
+  const formsWithRegExp = forms.map(([email, nickname]) => [
+    email,
+    nickname,
+    makeRegExp(nickname),
+  ]);
+  formsWithRegExp.forEach(([email, , regExp]) => {
     if (!validateEmail(email)) return;
     if (emailSet.has(email)) return;
 
-    const emails = compareNicknames(nickname, forms);
-    addEamil(emails, emailSet);
+    const filteredEmails = filterEmail(regExp, forms);
+    addEamil(filteredEmails, emailSet);
   });
   return [...emailSet].sort();
 }
@@ -16,33 +21,24 @@ function addEamil(emails, emailSet) {
   });
 }
 
-function compareNicknames(targetNickname, forms) {
-  const regString = makeRegString(targetNickname);
-  const regExp = makeReg(regString);
-  return filterForms(regExp, forms).map(([email, _]) => email);
-}
-
-function filterForms(regExp, forms) {
+function filterEmail(regExp, forms) {
   const filteredForms = forms.filter(([_, nickname]) => nickname.match(regExp));
   if (filteredForms.length === 1) return [];
-  return filteredForms;
+  return filteredForms.map(([email, _]) => email);
 }
 
 function validateEmail(email) {
   return email.match(/@email.com/g);
 }
 
-function makeRegString(word) {
+function makeRegExp(word) {
   const wordArr = word.split("");
-  const regStringArr = wordArr.map((alpha, idx) => {
+  const arrForComapre = wordArr.map((alpha, idx) => {
     if (idx === wordArr.length - 1) return `${wordArr[idx - 1]}${alpha}`;
     return `${alpha}${wordArr[idx + 1]}`;
   });
-  return regStringArr.join("|");
-}
-
-function makeReg(regString) {
-  return new RegExp(regString, "g");
+  arrForComapre.pop();
+  return new RegExp(arrForComapre.join("|"), "g");
 }
 
 module.exports = problem6;
